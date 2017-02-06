@@ -70,6 +70,7 @@ namespace graphene { namespace chain {
             asset_publish_feed_operation,
             witness_create_operation,
             witness_update_operation,
+            incentive_operation,
             proposal_create_operation,
             proposal_update_operation,
             proposal_delete_operation,

@@ -420,7 +420,7 @@ namespace graphene { namespace chain {
          //calculte coins dividend in specified block
          uint64_t get_block_incentive( uint32_t num );
          processed_transaction _caculate_incentive();
-         account_id_type _fetch_succeed_account();
+         bool _fetch_succeed_account(account_id_type&);
 
          ///Steps involved in applying a new block
          ///@{

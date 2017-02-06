@@ -110,7 +110,7 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.witness_account );
    }
-
+   void operator()( const incentive_operation& op ) {}
    void operator()( const proposal_create_operation& op )
    {
       vector<authority> other;

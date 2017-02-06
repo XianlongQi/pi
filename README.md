@@ -2,7 +2,7 @@
 
 Pi(π) is a new generation blockchain technology. 
 
-Pi adopts a new consensus mechanism called IPoS(Improved proof of Stake), which helps it reach a balance between fairness and efficiency. Pi introduces a new incentive algorithm to attract users to use and to construct the Pi network.
+Pi adopts a new consensus mechanism called IPoS(Improved Proof of Stake), which helps it reach a balance between fairness and efficiency. Pi introduces a new incentive algorithm to attract users to use and to construct the Pi network.
 
 Pi derives from BitShares ([https://github.com/bitshares/bitshares-core](https://github.com/bitshares/bitshares-core)). 
 

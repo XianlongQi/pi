@@ -37,9 +37,9 @@ void_result incentive_evaluator::do_apply( const incentive_operation& o )
 { try {
     uint64_t others_get = o.total_coins * (1 - 0.0314) / o.accounts.size();
     uint64_t witness_get = o.total_coins - others_get * o.accounts.size();
-    db().adjust_balance(o.witness_account, -witness_get);
+    db().adjust_balance(o.witness_account, -asset(witness_get));
     for (auto account : o.accounts) {
-        db().adjust_balance( account, -others_get );
+        db().adjust_balance( account, -asset(others_get) );
     }
    return void_result();
 } FC_CAPTURE_AND_RETHROW( (o) ) }

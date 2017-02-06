@@ -250,8 +250,8 @@ processed_transaction database::_push_transaction( const signed_transaction& trx
    return processed_trx;
 }
     
-account_id_type database::_fetch_succeed_account() {
-    return account_id_type(0);
+bool database::_fetch_succeed_account(account_id_type & account) {
+    return true;
 }
 
 processed_transaction database::validate_transaction( const signed_transaction& trx )
@@ -738,12 +738,15 @@ uint64_t database::get_block_incentive( uint32_t num ) {
 processed_transaction database::_caculate_incentive() {
     processed_transaction itx;
     incentive_operation op;
-    op.witness_account = get_scheduled_witness( 1 );
+    auto witness_id = get_scheduled_witness(1);
+    const auto& witness_obj = witness_id(*this);
+    op.witness_account = witness_obj.witness_account;
     op.total_coins = get_block_incentive(_current_block_num+1);
     //share left coins with upto 314 accounts who make build-funds
     for (int i = 0; i < 314; i++) {
-        account_id_type account = _fetch_succeed_account();
-        if (account) {
+        account_id_type account;
+        bool success = _fetch_succeed_account(account);
+        if (success) {
             op.accounts.push_back(account);
         } else {
             break;
