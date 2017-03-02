@@ -2404,6 +2404,59 @@ public:
       return sign_transaction(tx, broadcast);
    }
 
+   signed_transaction build_construction_capital(
+      const amount& lock_amount,
+      int issuance_period,
+      int lock_duration
+   ) {
+      construction_capital_operation cons_cap_op;
+      cons_cap_op.lock_amount = lock_amount;
+      cons_cap_op.issuance_period = issuance_period;
+      cons_cap_op.lock_duration = lock_duration;
+      signed_transaction tx;
+      tx.operations.push_back(cons_cap_op);
+      set_operation_fees(tx, get_global_properties().parameters.current_fees);
+      tx.validate();
+      return sign_transaction(tx, broadcast);         
+   }
+
+   map<string, amount> get_construction_capital(
+      const string& account
+   ) {
+      return map<string, amount>();
+   }
+
+   signed_transaction accelerate_issuance(
+      const string& cons_cap_id,
+      const string& accelerat_account
+   ) {
+      accelerate_issuance_operation referendum_op;
+      accelerate_issuance_op.acc_amount = cons_cap_id;
+      accelerate_issuance_op.account = accelerat_account;
+      signed_transaction tx;
+      tx.operations.push_back(accelerate_issuance_op);
+      set_operation_fees(tx, get_global_properties().parameters.current_fees);
+      tx.validate();
+      return sign_transaction(tx, broadcast);         
+   }
+
+   signed_transaction issuance_rate_referendum(
+      int option
+   ) {
+      referendum_operation referendum_op;
+      referendum_op.account = account;
+      referendum_op.option_vote = option;
+      signed_transaction tx;
+      tx.operations.push_back(referendum_op);
+      set_operation_fees(tx, get_global_properties().parameters.current_fees);
+      tx.validate();
+      return sign_transaction(tx, broadcast);         
+   }
+
+   map<int, double> referendum_issuance_rate() {
+         return map<int, double>();
+   }
+
    void dbg_make_uia(string creator, string symbol)
    {
       asset_options opts;
@@ -3412,6 +3465,44 @@ signed_transaction wallet_api::approve_proposal(
    )
 {
    return my->approve_proposal( fee_paying_account, proposal_id, delta, broadcast );
+}
+
+signed_transaction wallet_api::build_construction_capital(
+      const amount& lock_amount,
+      int issuance_period,
+      int lock_duration
+) {
+      return my->build_construction_capital(lock_amount, issuance_period, lock_duration);
+}
+
+map<string, amount> wallet_api::get_construction_capital(
+      const string& account
+) {
+      return my->get_construction_capital(account);
+}
+
+signed_transaction wallet_api::accelerate_issuance(
+      const string& cons_cap_id,
+      const string& accelerat_account
+) {
+      return my->accelerate_issuance(cons_cap_id, accelerat_account);
+}
+
+signed_transaction wallet_api::accelerate_issuance(
+      const string& cons_cap_id,
+      const string& accelerat_account
+) {
+      return my->accelerate_issuance(cons_cap_id, accelerat_account);
+}
+
+signed_transaction wallet_api::issuance_rate_referendum(
+      int option
+) {
+      return my->issuance_rate_referendum(option);
+}
+
+map<int, double> wallet_api::referendum_issuance_rate() {
+      return my->referendum_issuance_rate();
 }
 
 global_property_object wallet_api::get_global_properties() const

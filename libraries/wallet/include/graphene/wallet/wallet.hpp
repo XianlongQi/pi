@@ -1446,8 +1446,62 @@ class wallet_api
          const approval_delta& delta,
          bool broadcast /* = false */
          );
-         
+
+      /** Build a construction capital
+       * 
+       * @param lock_amount amount of pi to lock
+       * @param issuance_period issuance period of this construction capital, counted in blocks
+       * @param lock_duration issuance period to be locked
+       * @return the signed version of the transaction
+       */
+      signed_transaction build_construction_capital(
+          const amount& lock_amount,
+          int issuance_period,
+          int lock_duration
+      );
+
+      /** Check all construction capital build by specified account
+       * 
+       * @param account account to query
+       * @return construction capitals in <id, amount> pair 
+       */
+      map<string, amount> get_construction_capital(
+          const string& account
+      );
+
+      /** Set accelerate issuance to other account, 
+       * this will accelerate their issuance produce speed
+       * 
+       * @param cons_cap_id construction capital to vote
+       * @param accelerat_account which account will be accelerate for, could not be one self
+       * @return the signed version of the transaction
+       */
+      signed_transaction accelerate_issuance(
+          const string& cons_cap_id,
+          const string& accelerat_account
+      );
+
+            
+      /** referendum for issuance rate
+       * only accepted in referendum period
+       * 
+       * @param option option of your choice
+       * @return the signed version of the transaction
+       */
+      signed_transaction issuance_rate_referendum(
+          int option
+      );
+
+      /** referendum for issuance rate
+       * only accepted in referendum period
+       * 
+       * @param option option of your choice
+       * @return query for current referendum issuance rate, in <option, rate> pair
+       */
+      map<int, double> referendum_issuance_rate();
+
       order_book get_order_book( const string& base, const string& quote, unsigned limit = 50);
+      
 
       void dbg_make_uia(string creator, string symbol);
       void dbg_make_mia(string creator, string symbol);
@@ -1626,6 +1680,12 @@ FC_API( graphene::wallet::wallet_api,
         (propose_parameter_change)
         (propose_fee_change)
         (approve_proposal)
+        (build_construction_capital)
+        (get_construction_capital)
+        (accelerate_issuance)
+        (accelerate_issuance)
+        (issuance_rate_referendum)
+        (referendum_issuance_rate)
         (dbg_make_uia)
         (dbg_make_mia)
         (dbg_push_blocks)

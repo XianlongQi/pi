@@ -45,6 +45,9 @@ add_library( graphene_chain
              protocol/committee_member.cpp
              protocol/witness.cpp
              protocol/incentive.cpp
+             protocol/construction_capital.cpp
+             protocol/accelerate_issuance.cpp
+             protocol/referendum.cpp
              protocol/market.cpp
              protocol/proposal.cpp
              protocol/withdraw_permission.cpp
